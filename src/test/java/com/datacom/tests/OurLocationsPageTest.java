@@ -58,7 +58,7 @@ public class OurLocationsPageTest {
     }
 
     @Parameters({"regions"})
-    @Test
+    @Test(priority = 0)
     public void DatacomRegions(String regions) {
         LocationsPage locationsPage = new LocationsPage(driver);
         List<String> dcRegions = List.of(regions.split(","));
@@ -76,16 +76,15 @@ public class OurLocationsPageTest {
         Assert.assertTrue(locationsPage.checkIfRegionIsActive("Asia"));
     }
 
-    @Parameters({"location"})
-    @Test
-    public void DatacomLocations(String location) {
+    @Parameters({"region", "location"})
+    @Test(priority = 1)
+    public void DatacomLocations(String region, String location) {
         LocationsPage locationsPage = new LocationsPage(driver);
 
-        locationsPage.selectRegion("New Zealand");
-        List<String> nzLocations = locationsPage.getAllDatacomLocations("New Zealand");
+        locationsPage.selectRegion(region);
+        List<String> nzLocations = locationsPage.getAllDatacomLocations(region);
 
-        boolean hastings = nzLocations.contains(location);
-        Assert.assertTrue(hastings);
+        Assert.assertTrue(nzLocations.contains(location));
     }
 
     @AfterTest
