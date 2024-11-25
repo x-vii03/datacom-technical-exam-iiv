@@ -82,9 +82,9 @@ public class OurLocationsPageTest {
         LocationsPage locationsPage = new LocationsPage(driver);
 
         locationsPage.selectRegion(region);
-        List<String> nzLocations = locationsPage.getAllDatacomLocations(region);
+        List<String> locations = locationsPage.getAllDatacomLocations(region);
 
-        Assert.assertTrue(nzLocations.contains(location));
+        Assert.assertTrue(locations.contains(location));
     }
 
     @AfterTest
