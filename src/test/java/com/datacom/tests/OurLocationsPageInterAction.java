@@ -98,7 +98,6 @@ public class OurLocationsPageInterAction {
         List<WebElement> asiaLocations = asiaRegion.findElements(By.cssSelector(".cmp-location__location-container"));
 
         Assert.assertEquals(asiaLocations.size(), 3);
-
     }
 
     @AfterTest

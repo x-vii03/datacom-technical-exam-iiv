@@ -57,22 +57,24 @@ public class OurLocationsPageTest {
 
     }
 
+    @Parameters({"regions"})
     @Test
-    public void DatacomRegions(){
+    public void DatacomRegions(String regions) {
         LocationsPage locationsPage = new LocationsPage(driver);
+        List<String> dcRegions = List.of(regions.split(","));
+        Assert.assertEquals(locationsPage.getAllDatacomRegions(), dcRegions);
 
-        locationsPage.getAllDatacomRegions();
+        // Check Default
+        Assert.assertTrue(locationsPage.checkIfRegionIsActive("New Zealand"));
 
-        for(String region : locationsPage.getAllDatacomRegions())
-        {
-            System.out.println(region);
-        }
+        locationsPage.selectRegion("Australia");
 
-
+        // Check if Australia is active
+        Assert.assertTrue(locationsPage.checkIfRegionIsActive("Australia"));
     }
 
     @AfterTest
-    public void teardown(){
+    public void teardown() {
         driver.quit();
     }
 

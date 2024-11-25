@@ -5,13 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LocationsPage {
 
@@ -77,20 +77,36 @@ public class LocationsPage {
         for (WebElement tab : ourLocationsTabEl) {
             if (tab.getText().equals(tabName)) {
                 tab.click();
-            } else if (tab.getText().equals(tabName)) {
-                tab.click();
-            } else if (tab.getText().equals(tabName)) {
-                tab.click();
+                break;
             }
         }
     }
 
-    public  List<String> getAllDatacomRegions(){
+    public List<String> getAllDatacomRegions() {
         List<String> regions = new ArrayList<>();
-        for(WebElement region : datacomRegions){
+        for (WebElement region : datacomRegions) {
             regions.add(region.getText());
         }
         return regions;
+    }
+
+    public void selectRegion(String regionName) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        for (WebElement region : datacomRegions) {
+            if (region.getText().trim().equals(regionName)) {
+                wait.until(ExpectedConditions.elementToBeClickable(region)).click();
+                break;
+            }
+        }
+    }
+
+    public boolean checkIfRegionIsActive(String name) {
+        for (WebElement region : datacomRegions) {
+            if (Objects.requireNonNull(region.getAttribute("class")).contains("active")) {
+                return region.getText().equals(name);
+            }
+        }
+        return false;
     }
 
     public String getActiveTab() {
