@@ -3,6 +3,7 @@ package com.datacom.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -38,15 +39,15 @@ public class LocationsPage {
     List<WebElement> datacomRegions;
 
     @FindBy(css = "div[region='New Zealand']")
-    List<WebElement> newZealandReg;
+    WebElement newZealandReg;
 
     @FindBy(css = "div[region='Australia']")
-    List<WebElement> australiaReg;
+    WebElement australiaReg;
 
     @FindBy(css = "div[region='Asia']")
-    List<WebElement> asiaReg;
+    WebElement asiaReg;
 
-    By locationsLocator = By.cssSelector(".cmp-location__location-container");
+    By locationsLocator = By.cssSelector(".cmp-location__location-container .cmp-location__location__name");
 
     public Boolean isHeaderDisplayed() {
         return pageHeaderEl.isDisplayed();
@@ -91,10 +92,12 @@ public class LocationsPage {
     }
 
     public void selectRegion(String regionName) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        Actions actions = new Actions(driver);
         for (WebElement region : datacomRegions) {
             if (region.getText().trim().equals(regionName)) {
-                wait.until(ExpectedConditions.elementToBeClickable(region)).click();
+                actions.moveToElement(region);
+                actions.perform();
+                region.click();
                 break;
             }
         }
@@ -107,6 +110,24 @@ public class LocationsPage {
             }
         }
         return false;
+    }
+
+    public List<String> getAllDatacomLocations(String regionName) {
+        List<String> locations = new ArrayList<>();
+        if (regionName.equals("New Zealand")) {
+            for (WebElement location : newZealandReg.findElements(locationsLocator)){
+                locations.add(location.getText());
+            }
+        } else if (regionName.equals("Australia")) {
+            for (WebElement location : australiaReg.findElements(locationsLocator)){
+                locations.add(location.getText());
+            }
+        } else if (regionName.equals("Asia")) {
+            for (WebElement location : asiaReg.findElements(locationsLocator)){
+                locations.add(location.getText());
+            }
+        }
+        return locations;
     }
 
     public String getActiveTab() {

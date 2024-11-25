@@ -64,13 +64,28 @@ public class OurLocationsPageTest {
         List<String> dcRegions = List.of(regions.split(","));
         Assert.assertEquals(locationsPage.getAllDatacomRegions(), dcRegions);
 
-        // Check Default
+        // Check Region Default
         Assert.assertTrue(locationsPage.checkIfRegionIsActive("New Zealand"));
 
+        // Select Australia
         locationsPage.selectRegion("Australia");
-
-        // Check if Australia is active
         Assert.assertTrue(locationsPage.checkIfRegionIsActive("Australia"));
+
+        // Select Asia
+        locationsPage.selectRegion("Asia");
+        Assert.assertTrue(locationsPage.checkIfRegionIsActive("Asia"));
+    }
+
+    @Parameters({"location"})
+    @Test
+    public void DatacomLocations(String location) {
+        LocationsPage locationsPage = new LocationsPage(driver);
+
+        locationsPage.selectRegion("New Zealand");
+        List<String> nzLocations = locationsPage.getAllDatacomLocations("New Zealand");
+
+        boolean hastings = nzLocations.contains(location);
+        Assert.assertTrue(hastings);
     }
 
     @AfterTest

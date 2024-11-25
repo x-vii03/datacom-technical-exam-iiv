@@ -5,8 +5,9 @@
         <parameter name="header" value="Our locations"/>
         <parameter name="defaultContext"
                    value="Contact one of our global offices or one of our teams to find out more about how we can help you, or to answer any query you may have."/>
-       <parameter name="tabNames" value="Our locations,Get in touch,Media pack"/>
+        <parameter name="tabNames" value="Our locations,Get in touch,Media pack"/>
         <parameter name="regions" value="New Zealand,Australia,Asia"/>
+        <parameter name="location" value="Nelson"/>
         <classes>
 
             <class name="com.datacom.tests.OurLocationsPageTest"/>
